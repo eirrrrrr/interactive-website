@@ -3,22 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Animation</title>
+  <title>Birthday Quiz</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f8f9fa;
-      overflow: hidden;
-    }
-
-    .center {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
-      flex-direction: column;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .cake {
@@ -28,6 +27,7 @@
       background: #f39c12;
       border-radius: 10px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
     }
 
     .cake::before {
@@ -75,84 +75,104 @@
     }
 
     .message {
-      margin-top: 20px;
       font-size: 24px;
       color: yellow;
       font-weight: bold;
-    }
-
-    .tulip {
-      position: absolute;
-      font-size: 20px;
-      animation: moveTulip linear infinite;
-    }
-
-    @keyframes moveTulip {
-      0% {
-        transform: translate(0, 0);
-      }
-      100% {
-        transform: translate(200px, 200px);
-      }
+      margin-top: 20px;
     }
 
     .countdown {
-      margin-top: 10px;
       font-size: 20px;
       color: #333;
-    }
-
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: red;
-      animation: fall 2s infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        opacity: 1;
-        transform: translateY(-100px);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(500px);
-      }
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="center">
+  <!-- Step 1: Kuis pertama -->
+  <div id="quiz1">
+    <h2>3 + 7 =</h2>
+    <input type="number" id="answer1" placeholder="Ketik angka saja" />
+    <button onclick="checkAnswer1()">Submit</button>
+  </div>
+
+  <!-- Step 2: Kuis kedua -->
+  <div id="quiz2" class="hidden">
+    <h2>Cristiano Ronaldo berasal dari klub sepak bola?</h2>
+    <input type="text" id="answer2" placeholder="Ketik dengan huruf kecil" />
+    <button onclick="checkAnswer2()">Submit</button>
+  </div>
+
+  <!-- Step 3: Kuis ketiga -->
+  <div id="quiz3" class="hidden">
+    <h2>Sapi minum apa?</h2>
+    <input type="text" id="answer3" placeholder="Ketik dengan huruf kecil" />
+    <button onclick="checkAnswer3()">Submit</button>
+  </div>
+
+  <!-- Step 4: Congratulation -->
+  <div id="congratulation" class="hidden">
+    <h2>Congratulation 🎉</h2>
+    <p class="countdown">Wait: <span id="countdown">3</span></p>
+  </div>
+
+  <!-- Step 5: Kue ulang tahun -->
+  <div id="birthday" class="hidden">
     <div class="cake">
       <div class="candle">
         <div class="flame"></div>
       </div>
     </div>
     <div class="message">Selamat Ulang Tahun!</div>
-    <div id="congrats"></div>
   </div>
 
   <script>
-    function startCountdown() {
-      const congratsDiv = document.getElementById("congrats");
-      let countdown = 3;
+    function checkAnswer1() {
+      const answer1 = document.getElementById("answer1").value;
+      if (answer1 == 10) {
+        document.getElementById("quiz1").classList.add("hidden");
+        document.getElementById("quiz2").classList.remove("hidden");
+      } else {
+        alert("Jawaban salah! Coba lagi.");
+      }
+    }
 
-      congratsDiv.innerHTML = `<div>Congratulation 🎉</div><div class="countdown">Wait: ${countdown}</div>`;
+    function checkAnswer2() {
+      const answer2 = document.getElementById("answer2").value.toLowerCase();
+      if (answer2 === "manchester united") {
+        document.getElementById("quiz2").classList.add("hidden");
+        document.getElementById("quiz3").classList.remove("hidden");
+      } else {
+        alert("Jawaban salah! Coba lagi.");
+      }
+    }
+
+    function checkAnswer3() {
+      const answer3 = document.getElementById("answer3").value.toLowerCase();
+      if (answer3 === "air") {
+        document.getElementById("quiz3").classList.add("hidden");
+        document.getElementById("congratulation").classList.remove("hidden");
+        startCountdown();
+      } else {
+        alert("Jawaban salah! Coba lagi.");
+      }
+    }
+
+    function startCountdown() {
+      let countdown = 3;
+      const countdownSpan = document.getElementById("countdown");
+
       const interval = setInterval(() => {
         countdown--;
-        if (countdown > 0) {
-          congratsDiv.innerHTML = `<div>Congratulation 🎉</div><div class="countdown">Wait: ${countdown}</div>`;
-        } else {
+        countdownSpan.textContent = countdown;
+
+        if (countdown === 0) {
           clearInterval(interval);
-          congratsDiv.innerHTML = "";
+          document.getElementById("congratulation").classList.add("hidden");
+          document.getElementById("birthday").classList.remove("hidden");
         }
       }, 1000);
     }
-
-    window.onload = () => {
-      startCountdown();
-    };
   </script>
 </body>
 </html>
