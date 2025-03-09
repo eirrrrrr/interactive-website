@@ -190,7 +190,7 @@
                         clearInterval(countdownInterval);
                         document.getElementById("congrats").style.display = "none";
                         startConfetti(); // Start konfeti
-                        showBirthday();
+                        setTimeout(showBirthday, 1000);
                     }
                 }, 1000);
             } else {
