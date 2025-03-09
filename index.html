@@ -45,6 +45,57 @@
             color: yellow;
             text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Border hitam */
         }
+
+        .birthday .cake {
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(to bottom, #ffcccc 50%, #ff6666 50%);
+            margin: 20px auto;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .birthday .cake::before {
+            content: '';
+            width: 120px;
+            height: 20px;
+            background: #ffcccc;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .birthday .candle {
+            width: 10px;
+            height: 40px;
+            background: yellow;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .birthday .flame {
+            width: 10px;
+            height: 15px;
+            background: radial-gradient(circle, #ff0 60%, transparent 70%);
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            animation: flicker 0.2s infinite;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -73,8 +124,10 @@
 
     <div class="birthday" id="birthday">
         <h1>Selamat Ulang Tahun</h1>
-        <div id="cake" style="font-size: 50px;">
-            🎂
+        <div class="cake">
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
         </div>
     </div>
 
@@ -152,4 +205,5 @@
         document.getElementById("question1").style.display = "block";
     </script>
 </body>
-</html>
+      </html>
+      
