@@ -189,8 +189,8 @@
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
                         document.getElementById("congrats").style.display = "none";
-                        showConfetti();
-                        setTimeout(showBirthday, 3000);
+                        startConfetti(); // Start konfeti
+                        showBirthday();
                     }
                 }, 1000);
             } else {
@@ -198,8 +198,8 @@
             }
         }
 
-        function showConfetti() {
-            for (let i = 0; i < 100; i++) {
+        function startConfetti() {
+            setInterval(() => {
                 const confetti = document.createElement("div");
                 confetti.classList.add("confetti");
                 confetti.style.backgroundColor = getRandomColor();
@@ -210,7 +210,7 @@
                 setTimeout(() => {
                     confetti.remove();
                 }, 3000);
-            }
+            }, 100);
         }
 
         function showBirthday() {
