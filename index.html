@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Interaktif</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: #f3f4f6;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: hsl(0, 100%, 50%);
+            animation: fall 3s linear infinite;
+            border-radius: 50%;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(110vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="question"></h1>
+    <input type="text" id="answer" placeholder="Ketik jawaban..." />
+    <button onclick="checkAnswer()">Kirim</button>
+    <script>
+        let step = 0;
+        const questions = [
+            { question: "3+7=", correct: "10", placeholder: "ketik angka saja" },
+            { question: "Cristiano Ronaldo berasal dari klub sepak bola?", correct: "manchester united", placeholder: "ketik dengan huruf kecil" },
+            { question: "Sapi minum apa?", correct: "air", placeholder: "ketik dengan huruf kecil" }
+        ];
+
+        const questionElement = document.getElementById("question");
+        const inputElement = document.getElementById("answer");
+
+        function displayQuestion() {
+            if (step < questions.length) {
+                questionElement.textContent = questions[step].question;
+                inputElement.placeholder = questions[step].placeholder;
+                inputElement.value = "";
+            } else {
+                showCongratulations();
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = inputElement.value.trim().toLowerCase();
+            if (userAnswer === questions[step].correct) {
+                step++;
+                displayQuestion();
+            } else {
+                alert("Jawaban salah, coba lagi!");
+            }
+        }
+
+        function showCongratulations() {
+            questionElement.textContent = "Congratulation🎉";
+            inputElement.style.display = "none";
+            document.querySelector("button").style.display = "none";
+
+            setTimeout(() => {
+                createConfetti();
+                setTimeout(() => {
+                    loadAnimation();
+                }, 2000);
+            }, 2000);
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = `${Math.random() * window.innerWidth}px`;
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function loadAnimation() {
+            questionElement.textContent = "Selamat Ulang Tahun 🎂";
+            document.body.style.background = "#222";
+            document.body.innerHTML += `
+                <div style="margin-top: 50px;">
+                    <div style="width: 150px; height: 100px; background: pink; border-radius: 10px; display: inline-block; position: relative;">
+                        <div style="width: 20px; height: 50px; background: yellow; position: absolute; top: -50px; left: 65px; animation: flicker 1s infinite;"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
